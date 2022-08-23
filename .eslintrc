@@ -1,0 +1,50 @@
+{
+  "plugins": ["prettier", "jest", "sonarjs"],
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "overrides": [
+    // TypeScript Source Code
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "excludedFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "extends": ["airbnb-base", "airbnb-typescript/base", "plugin:prettier/recommended", "plugin:sonarjs/recommended"],
+      "rules": {
+        "import/prefer-default-export": "off",
+        "import/extensions": "off",
+        "global-require": "off"
+      },
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "project": "./tsconfig.app.json"
+      }
+    },
+    // TypeScript Unit Tests
+    {
+      "files": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:prettier/recommended",
+        "plugin:sonarjs/recommended"
+      ],
+      "rules": {
+        "jest/consistent-test-it": ["error"],
+        "import/prefer-default-export": "off",
+        "jest/no-mocks-import": "off",
+        "import/extensions": "off"
+      },
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "project": "./tsconfig.app.json"
+      }
+    }
+  ]
+}
