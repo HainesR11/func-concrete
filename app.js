@@ -1,16 +1,25 @@
 const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+
+const ProjectRoutes = require('./routes/ProjectRouts')
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'Hello there',
-        app: 'ConcreteAPI'
-    })
+if (process.env.ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+app.use(express.json());
+
+app.use(cors())
+app.use(express.json());
+
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    next()
 })
 
-const port = 3000
-app.listen( port , () => {
-    console.log(`app running on port ${port}`);
-})
+app.use('/api/projects', ProjectRoutes)
 
+module.exports = app;
