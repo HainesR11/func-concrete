@@ -1,4 +1,5 @@
 const express = require('express');
+const { GetAllProjects, GetProject, DeleteProject, UpdateProject, CreateProject } = require('../Controllers/ProjectControllers');
 
 const router = express.Router();
 
@@ -12,15 +13,15 @@ const notThere = (req, res) => {
 //Projects
 router
 .route('/:userid')
-.get(notThere)
-.put(notThere)
+.get(GetAllProjects)
+.post(CreateProject)
 
-//Project Tasks
 router
-.route('/:userid/:projectid')
-.get(notThere)
-.put(notThere)
-.delete(notThere)
-.patch(notThere)
+.route('/:userid/:projectId')
+.get(GetProject)
+.patch(UpdateProject)
+.delete(DeleteProject)
+
+
 
 module.exports = router

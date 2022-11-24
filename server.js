@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 dotenv.config({path: './config.env'})
 const app = require('./app')
 
-const DBString = process.env.ENV === 'development' ? process.env.DATABASE_DEV : process.env.DATABASE_PROD
+const DBString = process.env.NODE_ENV === 'development' ? process.env.DATABASE_DEV : process.env.DATABASE_PROD
 
 const DB = DBString.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)
 

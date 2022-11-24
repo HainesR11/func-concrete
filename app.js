@@ -1,12 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const AppError = require('./utils/AppError')
+const GlobalErrorHandler = require('./utils/GlobalError')
 
-const ProjectRoutes = require('./routes/ProjectRouts')
+
+const ProjectRoutes = require('./routes/ProjectRoutes')
+const TaskRoutes = require("./routes/TasksRoutes")
+const UserRoutes = require('./routes/UserRoutes')
 
 const app = express();
 
-if (process.env.ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
@@ -21,5 +26,13 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/projects', ProjectRoutes)
+app.use('/api/tasks', TaskRoutes)
+app.use('/api/users', UserRoutes)
+
+app.all('*', (req, res, next ) => {
+    next(new AppError(`Cant find ${req.originalUrl} on this server!`, 404))
+})
+
+app.use(GlobalErrorHandler)
 
 module.exports = app;
